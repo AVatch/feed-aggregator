@@ -6,6 +6,8 @@ import datetime
 import urllib2
 import xml.etree.ElementTree as etree
 
+import twitter
+
 from parser import parse_content
 
 
@@ -44,7 +46,7 @@ def fetch_links(urls):
             yield i
 
     except Exception as e:
-        print e
+        print "[EXCEPTION]:\t", e
 
 
 def parse_links(node):
