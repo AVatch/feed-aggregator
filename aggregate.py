@@ -12,7 +12,6 @@ def aggregate(mode='rss'):
     if mode == 'rss':
         for category, urls in generate_rss_links():
             for url in fetch_links(urls):
-                print "CHECK URL:\t"
                 parsed_content = parse_content(url)
                 if parsed_content['title'] != 'Log In' \
                         and parsed_content['lead_image_url']:
@@ -20,7 +19,14 @@ def aggregate(mode='rss'):
                     print parsed_content['title']
 
     elif mode == 'twitter':
-        print 'twitter mode'
+        api = generate_twitter_api()
+        for username, domain in parse_twitter_usernames():
+            for url in generate_twitter_urls(api, username):
+                parsed_content = parse_content(url)
+                if parsed_content['lead_image_url'] \
+                        and parsed_content['domain'] == domain:
+                    fetched_content.append(parsed_content)
+                    print parsed_content['title']
     else:
         print 'error'
 

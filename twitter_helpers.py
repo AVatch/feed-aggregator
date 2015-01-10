@@ -1,5 +1,6 @@
 import twitter
 import re
+import csv
 from credentials import *
 
 
@@ -24,12 +25,17 @@ def extract_tweet_links(tweet):
     return re.findall(regex_exp, tweet)
 
 
-def generate_twitter_link_batch(username):
-    api = generate_twitter_api()
+def generate_twitter_urls(api, username):
     tweets = fetch_twitter_user_tweets(api, username)
     response = []
     for tweet in tweets:
         response += extract_tweet_links(tweet)
     return response
 
-generate_twitter_link_batch('guardian')
+
+def parse_twitter_usernames():
+    with open('sources/twitter.csv', 'rb') as f:
+        csv_reader = csv.reader(f, delimiter=',', quotechar='"')
+        for line in csv_reader:
+            username, domain = line
+            yield username.strip(), domain.strip()
