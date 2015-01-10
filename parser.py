@@ -20,12 +20,17 @@ def parse_content(url, version='v1'):
             'content',
             'word_count',
             'lead_image_url',
+            'url'
         }
     '''
     url = url.replace("#", "%23")
     endpoint = 'http://readability.com/api/content/' \
         + version + '/parser?url=' \
         + url + '&token=' + readability_api_token
-    req = urllib2.urlopen(endpoint)
-    res = json.loads(req.read())
+    try:
+        req = urllib2.urlopen(endpoint)
+        res = json.loads(req.read())
+    except Exception:
+        print "[EXCEPTION]:\tParser Error"
+        res = None
     return res
