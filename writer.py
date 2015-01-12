@@ -41,5 +41,5 @@ def write_to_db(client, raw_content):
 
     # Associated the discussion object to the Content object
     content['discussions'] = [discussion['_id']]
-    client['discussion_db']['discussion_collection'].update(
+    client['content_db']['content_collection'].update(
         {'_id': content['_id']},{'$set': content}, upsert=False)
