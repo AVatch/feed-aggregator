@@ -11,16 +11,19 @@ def write_to_db(client, raw_content):
     content['author'] = raw_content['author']
     content['excerpt'] = raw_content['excerpt']
     content['content'] = raw_content['content']
+    content['category'] = None
     content['lead_image_url'] = raw_content['lead_image_url']
     content['word_count'] = raw_content['word_count']
 
     content['view_count'] = 0
     content['share_count'] = 0
 
+    content['date_retrieved'] = datetime.datetime.now()
+
     content['nodes'] = []
     content['discussions'] = []
+    content['contexts'] = []
 
-    content['category'] = None
 
     # Check to ensure this link is not inserted already
     if client['content_db']['content_collection'].find_one({'url': content['url']}):
