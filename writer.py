@@ -24,7 +24,6 @@ def write_to_db(client, raw_content):
     content['discussions'] = []
     content['contexts'] = []
 
-
     # Check to ensure this link is not inserted already
     if client['content_db']['content_collection'].find_one({'url': content['url']}):
         return False

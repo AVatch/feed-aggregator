@@ -1,11 +1,14 @@
-Python module to aggregate links from either RSS source or Twitter username source
-===
+# Feed-Aggregator
+A python module which goes through either RSS or twitter sources and parses out any articles in them. 
 
-logs > error and warnings are printed there
-sources > define rss links and twitter handles
+## To Run
+```bash
+python aggregate -m rss -w 0
+```
 
-To use twitter, you must have registered a twitter dev account and have an app
+Arguments: ```-m``` or ```--mode``` can be either ```rss``` or ```twitter```. This goes into ```/sources/``` and 
+pulls all content from those sources. 
 
-Then run the get_twitter_access_token.py script
+```-w``` or ```--write``` can be either ```0``` or ```1```. If ```0``` this only streams the content, otherwise
+it writes it to mongodb. If writing to mongodb, you need to have ```pymongo``` installed and be running ```mongod```.
 
-create a credentials.py file and store your credentials there

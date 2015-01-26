@@ -1,6 +1,4 @@
-import logging
 import argparse
-import datetime
 import pymongo
 
 from rss_helpers import *
@@ -26,7 +24,8 @@ def aggregate(mode='rss', write=False):
                         fetched_content.append(parsed_content)
                         if write:
                             write_to_db(client, parsed_content)
-                        print parsed_content['domain'], '\t', parsed_content['title']
+                        print parsed_content['domain'], '\t', \
+                            parsed_content['title']
 
     elif mode == 'twitter':
         api = generate_twitter_api()
@@ -39,21 +38,21 @@ def aggregate(mode='rss', write=False):
                         fetched_content.append(parsed_content)
                         if write:
                             write_to_db(client, parsed_content)
-                        print parsed_content['domain'], '\t', parsed_content['title']
+                        print parsed_content['domain'], '\t', \
+                            parsed_content['title']
     else:
         print 'error'
 
 
-def logging_config():
-    log_name = 'logs/aggregate_' + str(datetime.datetime.now()) + '.log'
-    logging.basicConfig(filename=log_name, level=logging.INFO)
-
-
 if __name__ == '__main__':
+    # Setup the arguments
     parser = argparse.ArgumentParser(description='Fetch content given \
       twitter username, domain combinations or rss list')
     parser.add_argument('-m', '--mode', help='rss for RSS feed, \
       twitter for Twitter feed')
+    parser.add_argument('-w', '--write', help='0 for stream, \
+        1 for write to mongo')
     args = vars(parser.parse_args())
 
-    aggregate(mode=args['mode'], write=True)
+    # Call main function
+    aggregate(mode=args['mode'], write=int(args['write']))
